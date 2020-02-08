@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.main-container{
+  background-color: #FBF8FC;
+  height:100vh;
+}
+.show-area{
+  margin:auto;
+  width: 50vw;
+  height:80vh;
+  background-color: black;
+}
+.video{
+  height:0px;
+  width:0px;
+}
+.canvas{
+  height: 100vh;
+  width:100vw;
+}
