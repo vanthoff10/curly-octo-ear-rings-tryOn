@@ -2,8 +2,8 @@ import React from 'react'
 import WebCam from 'react-webcam'
 import * as poseEstimation from '@tensorflow-models/posenet'
 import ear1 from '../images/sa.png'
-//To render img we need to do this in requestanimationframe
 
+//just render it for the ears and the minor change in position for that.
 
 export default class MediaComponent extends React.Component{
 	constructor(props){
@@ -16,8 +16,8 @@ export default class MediaComponent extends React.Component{
 		this.imgRef=React.createRef()
 		this.posenet=[]
 		this.canvasRef=React.createRef()
-		this.x=0;
-		this.y=0;
+		this.x=-90;
+		this.y=-90;
 	}
 	drawCircle(){
 		let ctx=this.canvasRef.current.getContext('2d')
@@ -61,8 +61,14 @@ export default class MediaComponent extends React.Component{
 		const pose = await this.posenet.estimateSinglePose(this.canvasRef.current, {
   		  flipHorizontal: false
 		})
+		let prevx=this.x
+		let prevy=this.y
 		this.x=pose.keypoints[0].position.x
 		this.y=pose.keypoints[0].position.y	
+
+		this.x=(this.x-prevx)*0.80 + prevx 
+		this.y = (this.y-prevy)*0.80 + prevy
+
 		//console.log('point',pose.keypoints[4].position.x)
 		//console.log('pose',pose)
 		
