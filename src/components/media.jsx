@@ -83,7 +83,7 @@ export default class MediaComponent extends React.Component{
 	}
 	render(){
 		return(
-			<div ref={ref => (this.mount = ref)}>
+			<div>
 				<img ref={this.imgRef} src={ear1} height="80px" width="40px"/>
 				<video ref={this.webCamRef} autoPlay className="video"></video>
 				<canvas ref={this.canvasRef} height="640" width="480"></canvas>
