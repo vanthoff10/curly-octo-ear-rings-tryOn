@@ -1,12 +1,8 @@
 import React from 'react'
 import WebCam from 'react-webcam'
 import * as poseEstimation from '@tensorflow-models/posenet'
-import img from '../image.jpg'
-
-
-
-//Video is drawn to canvas . So just remove video and make canvas full time and then render earrings and its done.
-
+import ear1 from '../images/sa.png'
+//To render img we need to do this in requestanimationframe
 
 
 export default class MediaComponent extends React.Component{
@@ -14,10 +10,23 @@ export default class MediaComponent extends React.Component{
 		super(props)
 		this.webCamRef=React.createRef()
 		this.tryOn=this.tryOn.bind(this)
+		this.drawCircle= this.drawCircle.bind(this)
+		this.drawObject = this.drawObject.bind(this)
 		this.repeatTryon = this.repeatTryon.bind(this)
+		this.imgRef=React.createRef()
 		this.posenet=[]
 		this.canvasRef=React.createRef()
+		this.x=0;
+		this.y=0;
 	}
+	drawCircle(){
+		let ctx=this.canvasRef.current.getContext('2d')
+		ctx.arc(200, 300, 10,0, 2* Math.PI);
+		ctx.fillStyle = "black";
+		ctx.fill();
+		requestAnimationFrame(this.drawCircle)
+	}
+
 	componentDidMount(){
 		console.log('canvasref',this.canvasRef.current.height)
 		navigator.mediaDevices
@@ -26,15 +35,14 @@ export default class MediaComponent extends React.Component{
 			this.webCamRef.current.srcObject=stream 
 			const draw = () =>{
 			this.canvasRef.current.getContext("2d").drawImage(this.webCamRef.current,0,0,this.canvasRef.current.height,this.canvasRef.current.height)
+
 			requestAnimationFrame(draw)
 			}
 			requestAnimationFrame(draw)
 			console.log('media object',this.webCamRef)
-		
+			
 		})
 	}
-
-
 
 	async tryOn(){
 		console.log('posenet loading..')
@@ -45,21 +53,40 @@ export default class MediaComponent extends React.Component{
 		  multiplier: 0.75
 		})
 		this.posenet=posenetgot
+		console.log('posenet Loaded')
 		this.repeatTryon()
 		
 	}
 	async repeatTryon(){
 		const pose = await this.posenet.estimateSinglePose(this.canvasRef.current, {
-  		  flipHorizontal: true
-  			})
-		console.log('pose',pose)
-		//requestAnimationFrame(this.repeatTryon)
+  		  flipHorizontal: false
+		})
+		this.x=pose.keypoints[0].position.x
+		this.y=pose.keypoints[0].position.y	
+		//console.log('point',pose.keypoints[4].position.x)
+		//console.log('pose',pose)
+		
+// 		var drawObjectNow= ()=>{
+		
+// 		//this.canvasRef.current.getContext('2d').clearReact(pose.keypoints[3].position.x,pose.keypoints[3].position.y,50,80)	
+// //		this.canvasRef.current.getContext('2d').arc(pose.keypoints[0].position.x, pose.keypoints[0].position.y, 10,0, 2* Math.PI);
+// 		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,pose.keypoints[0].position.x,pose.keypoints[0].position.y,50,80)
+// 		//requestAnimationFrame(drawObject)
+// 		}		
+		requestAnimationFrame(this.drawObject)
+		
+		requestAnimationFrame(this.repeatTryon)
+	}
+	drawObject(){
+		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.x,this.y,50,80)
+		requestAnimationFrame(this.drawObject)
 	}
 	render(){
 		return(
-			<div>
+			<div ref={ref => (this.mount = ref)}>
+				<img ref={this.imgRef} src={ear1} height="80px" width="40px"/>
 				<video ref={this.webCamRef} autoPlay className="video"></video>
-				<canvas ref={this.canvasRef} height="600" width="600"></canvas>
+				<canvas ref={this.canvasRef} height="640" width="480"></canvas>
 				<button onClick={this.tryOn}>Start Try On</button>
 			</div>
 			)
