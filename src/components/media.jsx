@@ -5,7 +5,7 @@ import ear1 from '../images/kp.png'
 
 //optimal inputres for mobivnet is 230 and slight change in orintatiotn is need when using phone 
 //resolution is optimal for now
-
+//OPTIMAL configuration for KP image on  desktop as well as mobile NOW just copy the ui to the same extend. 
 export default class MediaComponent extends React.Component{
 	constructor(props){
 		super(props)
