@@ -41,7 +41,7 @@ export default class MediaComponent extends React.Component{
 		console.log('canvasref',this.canvasRef.current.height)
 		navigator.mediaDevices
 		.getUserMedia({video: {
-    facingMode:"user"
+    facingMode:"user", width:{min:400},height:{min:400}
   }})
 		.then((stream)=>{
 			this.webCamRef.current.srcObject=stream 
