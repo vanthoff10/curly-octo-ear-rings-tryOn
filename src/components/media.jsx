@@ -19,6 +19,15 @@ export default class MediaComponent extends React.Component{
 		this.ly=0;
 		this.ry=0;
 		this.rx=0;
+		console.log('heigth',window.innerHeight)
+		if(window.innerWidth>=640){
+			this.height=640
+			this.width=640	
+		} else{
+			this.height=window.innerHeight
+			this.width=window.innerWidth
+		}
+		
 	}
 	drawCircle(){
 		let ctx=this.canvasRef.current.getContext('2d')
@@ -31,7 +40,9 @@ export default class MediaComponent extends React.Component{
 	componentDidMount(){
 		console.log('canvasref',this.canvasRef.current.height)
 		navigator.mediaDevices
-		.getUserMedia({video:true})
+		.getUserMedia({video: {
+    facingMode:"user"
+  }})
 		.then((stream)=>{
 			this.webCamRef.current.srcObject=stream 
 			const draw = () =>{
@@ -102,10 +113,13 @@ export default class MediaComponent extends React.Component{
 	render(){
 		return(
 			<div>
-				<img ref={this.imgRef} src={ear1} height="80px" width="40px"/>
 				<video ref={this.webCamRef} autoPlay className="video"></video>
-				<canvas ref={this.canvasRef} height="640" width="480"></canvas>
+				<div className="canvas-wrapper">
+				<canvas ref={this.canvasRef} height={this.height} width={this.width} className="canvas"></canvas>
+				</div>
 				<button onClick={this.tryOn}>Start Try On</button>
+				<img ref={this.imgRef} src={ear1} height="80px" width="40px"/>
+				
 			</div>
 			)
 	}

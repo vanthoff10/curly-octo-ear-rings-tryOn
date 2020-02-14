@@ -42,8 +42,7 @@
   height:100vh;
 }
 .show-area{
-  margin:auto;
-  width: 50vw;
+  
   height:80vh;
   background-color: black;
 }
@@ -51,7 +50,13 @@
   height:0px;
   width:0px;
 }
-.canvas{
-  height: 100vh;
-  width:100vw;
+/*.canvas-wrapper{
+  max-width: 1024px;
+  min-width: 320px;
+  max-height:640px;
+  min-height: 500px;
 }
+.canvas{
+  width:100%;
+  height: 100%;
+}*/
