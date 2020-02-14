@@ -3,6 +3,8 @@ import WebCam from 'react-webcam'
 import * as poseEstimation from '@tensorflow-models/posenet'
 import ear1 from '../images/kp.png'
 
+//optimal inputres for mobivnet is 230 and slight change in orintatiotn is need when using phone 
+//resolution is optimal for now
 
 export default class MediaComponent extends React.Component{
 	constructor(props){
@@ -73,29 +75,28 @@ export default class MediaComponent extends React.Component{
 		const pose = await this.posenet.estimateSinglePose(this.canvasRef.current, {
   		  flipHorizontal: false
 		})
-		this.rx=pose.keypoints[4].position.x 
+		this.rx=pose.keypoints[4].position.x - 10
 		this.ry =pose.keypoints[4].position.y
-		this.lx=pose.keypoints[3].position.x 
+		this.lx=pose.keypoints[3].position.x - 10 
 		this.ly=pose.keypoints[3].position.y 
-
 	
-		// let prevx=this.lx
-		// let prevy=this.ly
-		// let prevrx=this.rx
-		// let prevry= this.ry
+		let prevx=this.lx
+		let prevy=this.ly
+		let prevrx=this.rx
+		let prevry= this.ry
 
 
 		// this.rx=pose.keypoints[4].position.x - 15
 		// this.ry =pose.keypoints[4].position.y + 5
 
-		// this.rx=(this.rx-prevrx)*0.70 + prevrx 
-		// this.ry = (this.ry-prevry)*0.70 + prevry
+		this.rx=(this.rx-prevrx)*0.70 + prevrx 
+		this.ry = (this.ry-prevry)*0.70 + prevry
 
 		// this.lx=pose.keypoints[3].position.x - 10
 		// this.ly=pose.keypoints[3].position.y + 16	
 
-		// this.lx=(this.lx-prevx)*0.76 + prevx 
-		// this.ly = (this.ly-prevy)*0.76 + prevy
+		this.lx=(this.lx-prevx)*0.70 + prevx 
+		this.ly = (this.ly-prevy)*0.70 + prevy
 
 		//console.log('point',pose.keypoints[4].position.x)
 		//console.log('pose',pose)
