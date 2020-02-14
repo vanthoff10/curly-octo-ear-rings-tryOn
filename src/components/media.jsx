@@ -1,9 +1,8 @@
 import React from 'react'
 import WebCam from 'react-webcam'
 import * as poseEstimation from '@tensorflow-models/posenet'
-import ear1 from '../images/sa.png'
+import ear1 from '../images/kp.png'
 
-//just render it for the ears and the minor change in position for that.
 
 export default class MediaComponent extends React.Component{
 	constructor(props){
@@ -16,8 +15,10 @@ export default class MediaComponent extends React.Component{
 		this.imgRef=React.createRef()
 		this.posenet=[]
 		this.canvasRef=React.createRef()
-		this.x=-90;
-		this.y=-90;
+		this.lx=0;
+		this.ly=0;
+		this.ry=0;
+		this.rx=0;
 	}
 	drawCircle(){
 		let ctx=this.canvasRef.current.getContext('2d')
@@ -61,13 +62,23 @@ export default class MediaComponent extends React.Component{
 		const pose = await this.posenet.estimateSinglePose(this.canvasRef.current, {
   		  flipHorizontal: false
 		})
-		let prevx=this.x
-		let prevy=this.y
-		this.x=pose.keypoints[0].position.x
-		this.y=pose.keypoints[0].position.y	
+		let prevx=this.lx
+		let prevy=this.ly
+		let prevrx=this.rx
+		let prevry= this.ry
 
-		this.x=(this.x-prevx)*0.80 + prevx 
-		this.y = (this.y-prevy)*0.80 + prevy
+
+		this.rx=pose.keypoints[4].position.x - 15
+		this.ry =pose.keypoints[4].position.y + 5
+
+		this.rx=(this.rx-prevrx)*0.70 + prevrx 
+		this.ry = (this.ry-prevry)*0.70 + prevry
+
+		this.lx=pose.keypoints[3].position.x - 10
+		this.ly=pose.keypoints[3].position.y + 16	
+
+		this.lx=(this.lx-prevx)*0.76 + prevx 
+		this.ly = (this.ly-prevy)*0.76 + prevy
 
 		//console.log('point',pose.keypoints[4].position.x)
 		//console.log('pose',pose)
@@ -84,7 +95,8 @@ export default class MediaComponent extends React.Component{
 		requestAnimationFrame(this.repeatTryon)
 	}
 	drawObject(){
-		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.x,this.y,50,80)
+		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.lx,this.ly,50,80)
+		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.rx,this.ry,50,80)
 		requestAnimationFrame(this.drawObject)
 	}
 	render(){
