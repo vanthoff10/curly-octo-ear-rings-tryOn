@@ -24,7 +24,7 @@ export default class MediaComponent extends React.Component{
 			this.height=640
 			this.width=640	
 		} else{
-			this.height=window.innerWidth
+			this.height=640
 			this.width=window.innerWidth
 		}
 		
