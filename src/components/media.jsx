@@ -61,7 +61,7 @@ export default class MediaComponent extends React.Component{
 		let posenetgot = await poseEstimation.load({
 			 architecture: 'MobileNetV1',
 		  outputStride: 16,
-		  inputResolution: { width: 640, height: 480 },
+		  inputResolution: { width: 250, height: 250 },
 		  multiplier: 0.75
 		})
 		this.posenet=posenetgot
