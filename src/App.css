@@ -60,3 +60,59 @@
   width:100%;
   height: 100%;
 }*/
+.selector{
+  background-color:#FBF8FC;
+  height: 100%;
+  width:46vw;
+  margin:auto;
+}
+@media only screen and (max-width:767px){
+  .selector{
+    width:100vw;
+  }
+}
+.earring-selector{
+  position: absolute;
+  bottom:0vh;
+  background-color: #FBF8FC;
+  height:30vh;
+  width:inherit;
+ }
+.earring-button{
+  color:#FE0085;
+  background-color:#FBF8FC;
+  border:0px;
+  margin:0px;
+  font-size:35px;
+}
+
+ 
+.selector-line{
+  position:absolute;
+    
+  background-color:#FBF8FC;
+  width: inherit;
+  margin:0px;
+}
+.image-section{
+  width:inherit;
+  height: auto;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+}
+.earring-uparrow{
+  position: absolute;
+  right:0;
+  color:#FE0085;
+  background-color:#FBF8FC;
+  border:0px;
+  margin:0px;
+  font-size:35px;
+}
+.camera-icon{
+  font-size:25vw;
+}
+.text{
+  font-size:30px;
+  color:#FE0085;
+}

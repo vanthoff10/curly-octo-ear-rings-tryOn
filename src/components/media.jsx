@@ -2,8 +2,9 @@ import React from 'react'
 import WebCam from 'react-webcam'
 import * as poseEstimation from '@tensorflow-models/posenet'
 import ear1 from '../images/kp.png'
+import {BsChevronUp,BsChevronDown,BsCamera} from 'react-icons/bs'
 
-//optimal inputres for mobivnet is 230 and slight change in orintatiotn is need when using phone 
+//optimal inputres for mobilevnet is 230 and slight change in orintatiotn is need when using phone 
 //resolution is optimal for now
 //OPTIMAL configuration for KP image on  desktop as well as mobile NOW just copy the ui to the same extend. 
 export default class MediaComponent extends React.Component{
@@ -11,17 +12,19 @@ export default class MediaComponent extends React.Component{
 		super(props)
 		this.webCamRef=React.createRef()
 		this.tryOn=this.tryOn.bind(this)
-		this.drawCircle= this.drawCircle.bind(this)
 		this.drawObject = this.drawObject.bind(this)
+		this.toggleSection = this.toggleSection.bind(this)
 		this.repeatTryon = this.repeatTryon.bind(this)
 		this.imgRef=React.createRef()
-		this.posenet=[]
 		this.canvasRef=React.createRef()
+		this.state={
+			showSelecter:false,
+			cameraAccess:true
+		}
 		this.lx=0;
 		this.ly=0;
 		this.ry=0;
 		this.rx=0;
-		console.log('heigth',window.innerHeight)
 		if(window.innerWidth>=640){
 			this.height=640
 			this.width=640	
@@ -31,20 +34,13 @@ export default class MediaComponent extends React.Component{
 		}
 		
 	}
-	drawCircle(){
-		let ctx=this.canvasRef.current.getContext('2d')
-		ctx.arc(200, 300, 10,0, 2* Math.PI);
-		ctx.fillStyle = "black";
-		ctx.fill();
-		requestAnimationFrame(this.drawCircle)
-	}
 
 	componentDidMount(){
 		console.log('canvasref',this.canvasRef.current.height)
 		navigator.mediaDevices
 		.getUserMedia({video: {
-    facingMode:"user" , width: 500 , height: 500}
-  })
+  		  facingMode:"user" , width: 500 , height: 500}
+		  })
 		.then((stream)=>{
 			this.webCamRef.current.srcObject=stream 
 			const draw = () =>{
@@ -55,6 +51,11 @@ export default class MediaComponent extends React.Component{
 			requestAnimationFrame(draw)
 			console.log('media object',this.webCamRef)
 			
+		})
+		.catch((err)=>{
+			this.setState({
+				cameraAccess:false
+			})
 		})
 	}
 
@@ -119,17 +120,52 @@ export default class MediaComponent extends React.Component{
 		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.rx,this.ry,50,80)
 		requestAnimationFrame(this.drawObject)
 	}
+	toggleSection(){
+		this.setState({
+			showSelecter: !this.state.showSelecter
+		})
+	}
 	render(){
 		return(
+			<div>
+			{this.state.cameraAccess ? 
 			<div>
 				<video ref={this.webCamRef} autoPlay className="video"></video>
 				<div className="canvas-wrapper">
 				<canvas ref={this.canvasRef} height={this.height} width={this.width} className="canvas"></canvas>
 				</div>
-				<button onClick={this.tryOn}>Start Try On</button>
-				<img ref={this.imgRef} src={ear1} height="80px" width="40px"/>
-				
+				<div className="selector">
+					<div className="selector-line">
+					{!this.state.showSelecter ? 
+					<div>
+						<button className="earring-button" onClick={this.toggleSection}>&bull; Ear-rings &bull; </button>
+						<button className="earring-uparrow" onClick={this.toggleSection}><BsChevronUp/> </button>
+					</div>
+					:
+					<div className="earring-selector">
+						<button className="earring-button" onClick={this.toggleSection}>&bull; Ear-rings &bull; </button>	
+						<button className="earring-uparrow" onClick={this.toggleSection}><BsChevronDown/> </button>
+						<div className="image-section">
+							<img ref={this.imgRef} src={ear1} height="200px" width="160px" className="ml-3 mr-3 img-fluid"/>
+							<img ref={this.imgRef} src={ear1} height="200px" width="160px" className="ml-2 mr-1 img-fluid"/>
+						</div>
+					</div>
+					}
+					</div>
+					
+				</div>
+			</div>
+			: 
+			<div>
+				<span className="camera-icon">
+					<BsCamera/>
+				</span>
+				<p className="text mt-5">We need Camera access for the Try On . Please reload the page to continue .</p>
+			</div>
+			}
 			</div>
 			)
 	}
 }
+// <button onClick={this.tryOn}>Start Try On</button>
+		//		<img ref={this.imgRef} src={ear1} height="80px" width="40px"/>
