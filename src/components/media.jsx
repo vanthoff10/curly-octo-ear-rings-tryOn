@@ -100,7 +100,7 @@ export default class MediaComponent extends React.Component{
 		let prevny=this.nosey
 
 		this.nosex=pose.keypoints[0].position.x + 20
-		this.nosey=pose.keypoints[0].position.y -15
+		this.nosey=pose.keypoints[0].position.y -18
 
 		this.nosex=(this.nosex-prevnx)*0.60 + prevnx
 		this.nosey=(this.nosey-prevny)*0.60 + prevny	
