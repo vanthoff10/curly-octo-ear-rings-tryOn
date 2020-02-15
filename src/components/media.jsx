@@ -52,7 +52,7 @@ export default class MediaComponent extends React.Component{
 			}
 			requestAnimationFrame(draw)
 			console.log('media object',this.webCamRef)
-			
+			this.tryOn()
 		})
 		.catch((err)=>{
 			this.setState({
@@ -66,12 +66,13 @@ export default class MediaComponent extends React.Component{
 		let posenetgot = await poseEstimation.load({
 			 architecture: 'MobileNetV1',
 		  outputStride: 16,
-		  inputResolution: { width: 230, height: 230 },
+		  inputResolution: { width: 200, height: 200 },
 		  multiplier: 0.75
 		})
 		this.posenet=posenetgot
 		console.log('posenet Loaded')
-		this.repeatTryon()
+	
+		//this.repeatTryon()
 		
 	}
 	async repeatTryon(){
@@ -122,10 +123,9 @@ export default class MediaComponent extends React.Component{
 		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.rx,this.ry,50,80)
 		requestAnimationFrame(this.drawObject)
 	}
-	imageCLick(value){
-		console.log(value)
+	imageCLick(){
 		this.toggleSection()
-		this.tryOn()
+		this.repeatTryon()
 	}
 	toggleSection(){
 		this.setState({
@@ -147,8 +147,8 @@ export default class MediaComponent extends React.Component{
 					<div className="selector-line">
 					{!this.state.showSelecter ? 
 					<div>
-						<button className="earring-button" onClick={this.toggleSection}>&bull; Ear-rings &bull; </button>
-						<button className="earring-uparrow" onClick={this.toggleSection}><BsChevronUp/> </button>
+						<button className=" btn earring-button " onClick={this.toggleSection}>&bull; Ear-rings &bull; </button>
+						<button className="btn earring-uparrow" onClick={this.toggleSection}><BsChevronUp/> </button>
 					</div>
 					:
 					<div className="earring-selector">

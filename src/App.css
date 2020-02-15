@@ -79,11 +79,11 @@
   width:inherit;
  }
 .earring-button{
-  color:#FE0085;
-  background-color:#FBF8FC;
-  border:0px;
-  margin:0px;
-  font-size:35px;
+  color:#FE0085 !important;
+  background-color:#FBF8FC !important;
+  border:0px !important;
+  margin:0px !important;
+  font-size:35px !important;
 }
 
  
@@ -103,11 +103,11 @@
 .earring-uparrow{
   position: absolute;
   right:0;
-  color:#FE0085;
-  background-color:#FBF8FC;
-  border:0px;
-  margin:0px;
-  font-size:35px;
+  color:#FE0085 !important; 
+  background-color:#FBF8FC !important;
+  border:0px !important;
+  margin:0px !important;
+  font-size:35px !important;
 }
 .camera-icon{
   font-size:25vw;
