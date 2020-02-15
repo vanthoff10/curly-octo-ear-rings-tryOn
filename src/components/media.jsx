@@ -2,6 +2,7 @@ import React from 'react'
 import WebCam from 'react-webcam'
 import * as poseEstimation from '@tensorflow-models/posenet'
 import ear1 from '../images/kp.png'
+import ear from '../images/ear.png'
 import {BsChevronUp,BsChevronDown,BsCamera} from 'react-icons/bs'
 
 //optimal inputres for mobilevnet is 230 and slight change in orintatiotn is need when using phone 
@@ -15,6 +16,7 @@ export default class MediaComponent extends React.Component{
 		this.drawObject = this.drawObject.bind(this)
 		this.toggleSection = this.toggleSection.bind(this)
 		this.repeatTryon = this.repeatTryon.bind(this)
+		this.imageCLick=this.imageCLick.bind(this)
 		this.imgRef=React.createRef()
 		this.canvasRef=React.createRef()
 		this.state={
@@ -120,6 +122,11 @@ export default class MediaComponent extends React.Component{
 		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.rx,this.ry,50,80)
 		requestAnimationFrame(this.drawObject)
 	}
+	imageCLick(value){
+		console.log(value)
+		this.toggleSection()
+		this.tryOn()
+	}
 	toggleSection(){
 		this.setState({
 			showSelecter: !this.state.showSelecter
@@ -130,6 +137,8 @@ export default class MediaComponent extends React.Component{
 			<div>
 			{this.state.cameraAccess ? 
 			<div>
+			<img ref={this.imgRef} src={ear1} height="0px" width="0px"/>
+							
 				<video ref={this.webCamRef} autoPlay className="video"></video>
 				<div className="canvas-wrapper">
 				<canvas ref={this.canvasRef} height={this.height} width={this.width} className="canvas"></canvas>
@@ -146,9 +155,8 @@ export default class MediaComponent extends React.Component{
 						<button className="earring-button" onClick={this.toggleSection}>&bull; Ear-rings &bull; </button>	
 						<button className="earring-uparrow" onClick={this.toggleSection}><BsChevronDown/> </button>
 						<div className="image-section row">
-							<div className="col-md-6 col-sm-6 col-lg-6 pl-3">
-							<img ref={this.imgRef} src={ear1} height="140px" width="110px" className=" mr-1 img-fluid"/>
-							<img ref={this.imgRef} src={ear1} height="140px" width="110px" className=" mr-1 img-fluid"/>
+							<div className="col-md-6 col-sm-6 col-lg-6 pl-3 m-auto" onClick={this.imageCLick}>
+							<img  src={ear} height="180px" width="150px" className="   img-fluid"/>
 							</div>
 							
 						</div>
