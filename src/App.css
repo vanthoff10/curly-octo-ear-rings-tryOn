@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #F8F8FC;
 }
 
 .App-logo {
@@ -49,27 +50,12 @@
 .video{
   height:0px;
   width:0px;
-}
-/*.canvas-wrapper{
-  max-width: 1024px;
-  min-width: 320px;
-  max-height:640px;
-  min-height: 500px;
-}
-.canvas{
-  width:100%;
-  height: 100%;
-}*/
+} 
 .selector{
   background-color:#FBF8FC;
   height: 100%;
   width:46vw;
   margin:auto;
-}
-@media only screen and (max-width:767px){
-  .selector{
-    width:100vw;
-  }
 }
 .earring-selector{
   position: absolute;
@@ -83,7 +69,8 @@
   background-color:#FBF8FC !important;
   border:0px !important;
   margin:0px !important;
-  font-size:35px !important;
+  vertical-align: middle;
+  font-size:28px !important;
 }
 
  
@@ -99,6 +86,7 @@
   height: auto;
   scroll-behavior: smooth;
   overflow-y: auto;
+  vertical-align: middle;
 }
 .earring-uparrow{
   position: absolute;
@@ -115,4 +103,33 @@
 .text{
   font-size:30px;
   color:#FE0085;
+}
+.bigdot{
+  color:#FE0085;
+  font-size:40px;
+  vertical-align: middle;
+}
+.clear{
+  background-color: #FE0085 !important;
+  color:white !important;
+  border-radius: 4px !important;
+}
+@media only screen and (max-width:767px){
+  .selector{
+    width:100vw;
+  }
+  .earring-button{
+    font-size:25px !important;
+  }
+  .bigdot{
+    font-size:35px;
+  }
+}
+@media only screen and (max-width:370px){
+  .earring-button{
+    font-size:18px !important;
+  }
+  .bigdot{
+    font-size:35px;
+  }
 }

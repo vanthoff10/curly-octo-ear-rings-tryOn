@@ -2,7 +2,12 @@ import React from 'react'
 import WebCam from 'react-webcam'
 import * as poseEstimation from '@tensorflow-models/posenet'
 import ear1 from '../images/kp.png'
+import nose1 from '../images/nose1.png'
 import {BsChevronUp,BsChevronDown,BsCamera} from 'react-icons/bs'
+
+
+
+//optimize view for ipad 
 
 //optimal inputres for mobilevnet is 230 and slight change in orintatiotn is need when using phone 
 //resolution is optimal for now
@@ -16,7 +21,11 @@ export default class MediaComponent extends React.Component{
 		this.toggleSection = this.toggleSection.bind(this)
 		this.repeatTryon = this.repeatTryon.bind(this)
 		this.imageCLick=this.imageCLick.bind(this)
+		this.nathiyaClick=this.nathiyaClick.bind(this)
+		this.drawNathiya= this.drawNathiya.bind(this)
+		this.clearFrames=this.clearFrames.bind(this)
 		this.imgRef=React.createRef()
+		this.nathiya= React.createRef()
 		this.canvasRef=React.createRef()
 		this.state={
 			showSelecter:false,
@@ -26,6 +35,11 @@ export default class MediaComponent extends React.Component{
 		this.ly=0;
 		this.ry=0;
 		this.rx=0;
+		this.nosex=0;
+		this.nosey=0;
+		this.r=0
+		this.n=0
+		this.e=0
 		if(window.innerWidth>=640){
 			this.height=640
 			this.width=640	
@@ -36,8 +50,7 @@ export default class MediaComponent extends React.Component{
 		
 	}
 
-	componentDidMount(){
-		console.log('canvasref',this.canvasRef.current.height)
+	componentDidMount(){ 
 		navigator.mediaDevices
 		.getUserMedia({video: {
   		  facingMode:"user" , width: 500 , height: 500}
@@ -50,7 +63,7 @@ export default class MediaComponent extends React.Component{
 			requestAnimationFrame(draw)
 			}
 			requestAnimationFrame(draw)
-			console.log('media object',this.webCamRef)
+			//console.log('media object',this.webCamRef)
 			this.tryOn()
 		})
 		.catch((err)=>{
@@ -83,11 +96,18 @@ export default class MediaComponent extends React.Component{
 		let prevy=this.ly
 		let prevrx=this.rx
 		let prevry= this.ry
+		let prevnx=this.nosex
+		let prevny=this.nosey
 
+		this.nosex=pose.keypoints[0].position.x + 20
+		this.nosey=pose.keypoints[0].position.y -15
 
-		this.rx=pose.keypoints[4].position.x - 13
+		this.nosex=(this.nosex-prevnx)*0.60 + prevnx
+		this.nosey=(this.nosey-prevny)*0.60 + prevny	
+
+		this.rx=pose.keypoints[4].position.x - 17
 		this.ry =pose.keypoints[4].position.y
-		this.lx=pose.keypoints[3].position.x - 8 
+		this.lx=pose.keypoints[3].position.x - 13 
 		this.ly=pose.keypoints[3].position.y 
 	
 
@@ -113,31 +133,50 @@ export default class MediaComponent extends React.Component{
 // 		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,pose.keypoints[0].position.x,pose.keypoints[0].position.y,50,80)
 // 		//requestAnimationFrame(drawObject)
 // 		}		
-		requestAnimationFrame(this.drawObject)
+
+
 		
-		requestAnimationFrame(this.repeatTryon)
+		this.r=requestAnimationFrame(this.repeatTryon)
 	}
+
 	drawObject(){
 		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.lx,this.ly,50,80)
 		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.rx,this.ry,50,80)
-		requestAnimationFrame(this.drawObject)
+		this.e = requestAnimationFrame(this.drawObject)
 	}
 	imageCLick(){
 		this.toggleSection()
 		this.repeatTryon()
+		requestAnimationFrame(this.drawObject)
+		
+	}
+	nathiyaClick(){
+		this.toggleSection()
+		this.repeatTryon()
+		 requestAnimationFrame(this.drawNathiya)		
 	}
 	toggleSection(){
 		this.setState({
 			showSelecter: !this.state.showSelecter
 		})
 	}
+	drawNathiya(){
+		this.canvasRef.current.getContext('2d').drawImage(this.nathiya.current,this.nosex,this.nosey,45,60)
+		this.n=requestAnimationFrame(this.drawNathiya)
+	}
+	clearFrames(){
+		cancelAnimationFrame(this.e)
+		cancelAnimationFrame(this.n)
+		cancelAnimationFrame(this.r)
+		this.toggleSection()
+	}
 	render(){
 		return(
 			<div>
 			{this.state.cameraAccess ? 
 			<div>
-			<img ref={this.imgRef} src={ear1} height="0px" width="0px"/>
-							
+				<img ref={this.imgRef} src={ear1} height="0px" width="0px"/>
+				<img ref={this.nathiya} src={nose1} height="0px" width="0px"/>			
 				<video ref={this.webCamRef} autoPlay className="video"></video>
 				<div className="canvas-wrapper">
 				<canvas ref={this.canvasRef} height={this.height} width={this.width} className="canvas"></canvas>
@@ -145,19 +184,26 @@ export default class MediaComponent extends React.Component{
 				<div className="selector">
 					<div className="selector-line">
 					{!this.state.showSelecter ? 
-					<div>
-						<button className=" btn earring-button " onClick={this.toggleSection}>&bull; Ear-rings &bull; </button>
-						<button className="btn earring-uparrow" onClick={this.toggleSection}><BsChevronUp/> </button>
+					<div className=" m-auto" onClick={this.toggleSection}>
+						<button className=" btn earring-button " >&bull; Ear-rings  </button>
+						<span className="bigdot ml-1 mr-1">&bull;</span>
+						<button className="btn earring-button">Nose Rings &bull;</button>
+						<button className=" earring-uparrow" onClick={this.toggleSection}><BsChevronUp/> </button>
 					</div>
 					:
 					<div className="earring-selector">
-						<button className="earring-button" onClick={this.toggleSection}>&bull; Ear-rings &bull; </button>	
-						<button className="earring-uparrow" onClick={this.toggleSection}><BsChevronDown/> </button>
-						<div className="image-section row">
-							<div className="col-md-6 col-sm-6 col-lg-6 pl-3 m-auto" onClick={this.imageCLick}>
-							<img  src={ear1} height="180px" width="150px" className=" ml-2 img-fluid"/>
-							</div>
-							
+						<div className=" m-auto" onClick={this.toggleSection}>
+							<button className=" earring-button " >&bull; Ear-rings  </button>	
+							<span className="bigdot ml-1 mr-1">&bull;</span>
+							<button className="btn earring-button">Nose Rings &bull;</button>
+							<button className="earring-uparrow" onClick={this.toggleSection}><BsChevronDown/> </button>
+						</div>
+						<div className="image-section">
+							<img  src={ear1} height="190px" width="160px" className=" ml-3 img-fluid" onClick={this.imageCLick}/>
+							<img src={nose1} height="100px" width="80px" className="mr-2 ml-4 " onClick={this.nathiyaClick}/>
+						</div>
+						<div className="text-center mt-0 mb-2">
+							<button className="btn clear" onClick={this.clearFrames}>Clear View</button>
 						</div>
 					</div>
 					}
