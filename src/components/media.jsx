@@ -2,7 +2,6 @@ import React from 'react'
 import WebCam from 'react-webcam'
 import * as poseEstimation from '@tensorflow-models/posenet'
 import ear1 from '../images/kp.png'
-import ear from '../images/ear.png'
 import {BsChevronUp,BsChevronDown,BsCamera} from 'react-icons/bs'
 
 //optimal inputres for mobilevnet is 230 and slight change in orintatiotn is need when using phone 
@@ -66,7 +65,7 @@ export default class MediaComponent extends React.Component{
 		let posenetgot = await poseEstimation.load({
 			 architecture: 'MobileNetV1',
 		  outputStride: 16,
-		  inputResolution: { width: 200, height: 200 },
+		  inputResolution: { width: 230, height: 230 },
 		  multiplier: 0.75
 		})
 		this.posenet=posenetgot
@@ -156,7 +155,8 @@ export default class MediaComponent extends React.Component{
 						<button className="earring-uparrow" onClick={this.toggleSection}><BsChevronDown/> </button>
 						<div className="image-section row">
 							<div className="col-md-6 col-sm-6 col-lg-6 pl-3 m-auto" onClick={this.imageCLick}>
-							<img  src={ear} height="180px" width="150px" className="   img-fluid"/>
+							<img  src={ear1} height="180px" width="150px" className="img-fluid"/>
+							<img  src={ear1} height="180px" width="150px" className="img-fluid"/>
 							</div>
 							
 						</div>

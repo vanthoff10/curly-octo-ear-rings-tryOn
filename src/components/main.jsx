@@ -14,7 +14,7 @@ export default class Main extends React.Component{
 		return(
 			<div className=" main-container">
 			
-				<MediaComponent loaded={this.loadedCallback}/>		
+				<MediaComponent/>		
 			
 			</div>
 		)
