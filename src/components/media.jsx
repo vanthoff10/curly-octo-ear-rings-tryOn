@@ -30,7 +30,7 @@ export default class MediaComponent extends React.Component{
 			this.height=640
 			this.width=640	
 		} else{
-			this.height=540
+			this.height=window.innerWidth+ 100
 			this.width=window.innerWidth
 		}
 		
@@ -155,8 +155,7 @@ export default class MediaComponent extends React.Component{
 						<button className="earring-uparrow" onClick={this.toggleSection}><BsChevronDown/> </button>
 						<div className="image-section row">
 							<div className="col-md-6 col-sm-6 col-lg-6 pl-3 m-auto" onClick={this.imageCLick}>
-							<img  src={ear1} height="180px" width="150px" className="img-fluid"/>
-							<img  src={ear1} height="180px" width="150px" className="img-fluid"/>
+							<img  src={ear1} height="180px" width="150px" className=" ml-2 img-fluid"/>
 							</div>
 							
 						</div>
