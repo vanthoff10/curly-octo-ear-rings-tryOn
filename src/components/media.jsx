@@ -145,9 +145,12 @@ export default class MediaComponent extends React.Component{
 					<div className="earring-selector">
 						<button className="earring-button" onClick={this.toggleSection}>&bull; Ear-rings &bull; </button>	
 						<button className="earring-uparrow" onClick={this.toggleSection}><BsChevronDown/> </button>
-						<div className="image-section">
-							<img ref={this.imgRef} src={ear1} height="200px" width="160px" className="ml-3 mr-3 img-fluid"/>
-							<img ref={this.imgRef} src={ear1} height="200px" width="160px" className="ml-2 mr-1 img-fluid"/>
+						<div className="image-section row">
+							<div className="col-md-6 col-sm-6 col-lg-6 pl-3">
+							<img ref={this.imgRef} src={ear1} height="140px" width="110px" className=" mr-1 img-fluid"/>
+							<img ref={this.imgRef} src={ear1} height="140px" width="110px" className=" mr-1 img-fluid"/>
+							</div>
+							
 						</div>
 					</div>
 					}
