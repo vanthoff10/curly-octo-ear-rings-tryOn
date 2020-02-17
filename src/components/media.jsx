@@ -60,7 +60,6 @@ export default class MediaComponent extends React.Component{
 			this.webCamRef.current.srcObject=stream 
 			const draw = () =>{
 			this.canvasRef.current.getContext("2d").drawImage(this.webCamRef.current,0,0,this.canvasRef.current.height,this.canvasRef.current.height)
-			this.canvas2Ref.current.getContext("2d").drawImage(this.webCamRef.current,0,0,this.canvasRef.current.height,this.canvasRef.current.height)
 			
 			requestAnimationFrame(draw)
 			}
@@ -136,9 +135,8 @@ export default class MediaComponent extends React.Component{
 // 		}		
 
 
-		setTimeout(()=>{
-			this.r=requestAnimationFrame(this.repeatTryon)	
-		},1000/90)	
+		this.r=requestAnimationFrame(this.repeatTryon)	
+		
 		
 	
 	}
@@ -217,9 +215,7 @@ export default class MediaComponent extends React.Component{
 					
 				</div>
 
-				<div className="canvas-wrapper">
-				<canvas ref={this.canvas2Ref} height={this.height} width={this.width} className="canvas second-canvas"></canvas>
-				</div>
+				 
 				
 			</div>
 			: 
