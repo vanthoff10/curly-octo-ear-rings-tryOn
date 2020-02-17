@@ -138,7 +138,7 @@ export default class MediaComponent extends React.Component{
 
 		setTimeout(()=>{
 			this.r=requestAnimationFrame(this.repeatTryon)	
-		},1000/45)	
+		},1000/90)	
 		
 	
 	}
