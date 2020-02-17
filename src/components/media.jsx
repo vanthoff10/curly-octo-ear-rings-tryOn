@@ -25,6 +25,7 @@ export default class MediaComponent extends React.Component{
 		this.drawNathiya= this.drawNathiya.bind(this)
 		this.clearFrames=this.clearFrames.bind(this)
 		this.imgRef=React.createRef()
+		this.canvas2Ref=React.createRef()
 		this.nathiya= React.createRef()
 		this.canvasRef=React.createRef()
 		this.state={
@@ -59,7 +60,8 @@ export default class MediaComponent extends React.Component{
 			this.webCamRef.current.srcObject=stream 
 			const draw = () =>{
 			this.canvasRef.current.getContext("2d").drawImage(this.webCamRef.current,0,0,this.canvasRef.current.height,this.canvasRef.current.height)
-
+			this.canvas2Ref.current.getContext("2d").drawImage(this.webCamRef.current,0,0,this.canvasRef.current.height,this.canvasRef.current.height)
+			
 			requestAnimationFrame(draw)
 			}
 			requestAnimationFrame(draw)
@@ -88,7 +90,7 @@ export default class MediaComponent extends React.Component{
 		
 	}
 	async repeatTryon(){
-		const pose = await this.posenet.estimateSinglePose(this.canvasRef.current, {
+		const pose = await this.posenet.estimateSinglePose(this.canvas2Ref.current, {
   		  flipHorizontal: false
 		})
 		
@@ -98,7 +100,6 @@ export default class MediaComponent extends React.Component{
 		let prevry= this.ry
 		let prevnx=this.nosex
 		let prevny=this.nosey
-
 		this.nosex=pose.keypoints[0].position.x + 20
 		this.nosey=pose.keypoints[0].position.y -18
 
@@ -161,6 +162,7 @@ export default class MediaComponent extends React.Component{
 		})
 	}
 	drawNathiya(){
+		console.log('inside nathiya')
 		this.canvasRef.current.getContext('2d').drawImage(this.nathiya.current,this.nosex,this.nosey,45,60)
 		this.n=requestAnimationFrame(this.drawNathiya)
 	}
@@ -210,6 +212,11 @@ export default class MediaComponent extends React.Component{
 					</div>
 					
 				</div>
+
+				<div className="canvas-wrapper">
+				<canvas ref={this.canvas2Ref} height={this.height} width={this.width} className="canvas second-canvas"></canvas>
+				</div>
+				
 			</div>
 			: 
 			<div>
