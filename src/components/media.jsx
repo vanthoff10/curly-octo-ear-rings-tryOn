@@ -24,8 +24,7 @@ export default class MediaComponent extends React.Component{
 		this.nathiyaClick=this.nathiyaClick.bind(this)
 		this.drawNathiya= this.drawNathiya.bind(this)
 		this.clearFrames=this.clearFrames.bind(this)
-		this.imgRef=React.createRef()
-		this.canvas2Ref=React.createRef()
+		this.imgRef=React.createRef() 
 		this.nathiya= React.createRef()
 		this.canvasRef=React.createRef()
 		this.state={
