@@ -141,8 +141,16 @@ export default class MediaComponent extends React.Component{
 	}
 
 	drawObject(){
-		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.lx,this.ly,50,80)
-		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.rx,this.ry,50,80)
+		//this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.lx,this.ly,50,80)
+		//this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.rx,this.ry,50,80)
+	  let context=this.canvasRef.current.getContext('2d')
+	  context.beginPath();
+      context.arc(200, 200, 70, 0, 2 * Math.PI, false);
+      context.fillStyle = 'green';
+      context.fill();
+      context.lineWidth = 5;
+      context.strokeStyle = '#003300';
+      context.stroke();
 		this.e = requestAnimationFrame(this.drawObject)
 	}
 	imageCLick(){
@@ -154,7 +162,7 @@ export default class MediaComponent extends React.Component{
 	nathiyaClick(){
 		this.toggleSection()
 		this.repeatTryon()
-		 requestAnimationFrame(this.drawNathiya)		
+		requestAnimationFrame(this.drawNathiya)		
 	}
 	toggleSection(){
 		this.setState({
