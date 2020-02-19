@@ -47,11 +47,11 @@ export default class MediaComponent extends React.Component{
 			this.height=window.innerWidth+ 100
 			this.width=window.innerWidth
 		}
-		if(!requestAnimationFrame){
-			requestAnimationFrame=window.webkitRequestAnimationFrame
+		if(!window.requestAnimationFrame){
+			window.requestAnimationFrame=window.webkitRequestAnimationFrame
 		}	
-		if(!cancelAnimationFrame){
-			cancelAnimationFrame=window.webkitCancelRequestAnimationFrame
+		if(!window.cancelAnimationFrame){
+			window.cancelAnimationFrame=window.webkitCancelRequestAnimationFrame
 		}
 
 	}
@@ -66,9 +66,9 @@ export default class MediaComponent extends React.Component{
 			const draw = () =>{
 			this.canvasRef.current.getContext("2d").drawImage(this.webCamRef.current,0,0,this.canvasRef.current.height,this.canvasRef.current.height)
 			
-			requestAnimationFrame(draw)
+			window.requestAnimationFrame(draw)
 			}
-			requestAnimationFrame(draw)
+			window.requestAnimationFrame(draw)
 			//console.log('media object',this.webCamRef)
 			this.tryOn()
 		})
@@ -140,7 +140,7 @@ export default class MediaComponent extends React.Component{
 // 		}		
 
 
-		this.r=requestAnimationFrame(this.repeatTryon)	
+		this.r=window.requestAnimationFrame(this.repeatTryon)	
 		
 		
 	
@@ -149,19 +149,19 @@ export default class MediaComponent extends React.Component{
 	drawObject(){
 		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.lx,this.ly,50,80)
 		this.canvasRef.current.getContext('2d').drawImage(this.imgRef.current,this.rx,this.ry,50,80)
-		this.e = requestAnimationFrame(this.drawObject)
+		this.e = window.requestAnimationFrame(this.drawObject)
 	}
 	imageCLick(){
 		this.toggleSection()
 		this.repeatTryon()
-		requestAnimationFrame(this.drawObject)
+		window.requestAnimationFrame(this.drawObject)
 		
 	}
 	nathiyaClick(){
 		this.toggleSection()
 		
 		this.repeatTryon()
-		 requestAnimationFrame(this.drawNathiya)		
+		window.requestAnimationFrame(this.drawNathiya)		
 	}
 	toggleSection(){
 		this.setState({
@@ -171,12 +171,12 @@ export default class MediaComponent extends React.Component{
 	drawNathiya(){
 		console.log('inside nathiya')
 		this.canvasRef.current.getContext('2d').drawImage(this.nathiya.current,this.nosex,this.nosey,45,60)
-		this.n=requestAnimationFrame(this.drawNathiya)
+		this.n=window.requestAnimationFrame(this.drawNathiya)
 	}
 	clearFrames(){
-		cancelAnimationFrame(this.e)
-		cancelAnimationFrame(this.n)
-		cancelAnimationFrame(this.r)
+		window.cancelAnimationFrame(this.e)
+		window.cancelAnimationFrame(this.n)
+		window.cancelAnimationFrame(this.r)
 		this.toggleSection()
 	}
 	render(){
