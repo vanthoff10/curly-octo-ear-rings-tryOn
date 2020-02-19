@@ -47,10 +47,10 @@ export default class MediaComponent extends React.Component{
 			this.height=window.innerWidth+ 100
 			this.width=window.innerWidth
 		}
-		if(!window.requestAnimationFrame){
+		if(!requestAnimationFrame){
 			requestAnimationFrame=window.webkitRequestAnimationFrame
 		}	
-		if(!window.cancelAnimationFrame){
+		if(!cancelAnimationFrame){
 			cancelAnimationFrame=window.webkitCancelRequestAnimationFrame
 		}
 
@@ -76,9 +76,9 @@ export default class MediaComponent extends React.Component{
 			this.setState({
 				cameraAccess:false
 			})
+			setTimeout(this.reprompt,3000)
 		})
 	}
-
 	async tryOn(){
 		console.log('posenet loading..')
 		let posenetgot = await poseEstimation.load({
