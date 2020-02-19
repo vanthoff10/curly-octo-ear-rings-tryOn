@@ -47,7 +47,13 @@ export default class MediaComponent extends React.Component{
 			this.height=window.innerWidth+ 100
 			this.width=window.innerWidth
 		}
-		
+		if(!window.requestAnimationFrame){
+			requestAnimationFrame=window.webkitRequestAnimationFrame
+		}	
+		if(!window.cancelAnimationFrame){
+			cancelAnimationFrame=window.webkitCancelRequestAnimationFrame
+		}
+
 	}
 
 	componentDidMount(){ 
